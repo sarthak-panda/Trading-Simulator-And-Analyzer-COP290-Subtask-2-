@@ -1,1 +1,0 @@
-# Trading-Simulator-And-Analyzer-COP290-Subtask-2-
