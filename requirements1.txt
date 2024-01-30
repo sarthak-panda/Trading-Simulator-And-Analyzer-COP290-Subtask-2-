@@ -1,0 +1,8 @@
+yfinance
+mplfinance
+cufflinks
+chart_studio
+nbformat
+statsmodels
+plotly
+jsonify
