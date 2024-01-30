@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoComplete Search bar</title>
+    <link rel="stylesheet" href="style_1.css">
+    <script src="https://kit.fontawesome.com/7b64c67f7b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+      <h1>
+        WELCOME 
+      </h1>
+        <div class ="search_box">
+            <div class="row">
+                <input type="text" id="input_box" placeholder="Search the stock"
+                autocomplete="off">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="result_box">
+                <!-- this is used for autocomplete keywords -->
+            </div>
+        </div>
+
+        <div class="todo-app">
+            <ul id="list-container">
+            </ul>
+        </div>
+        <div id="wrapper">
+            <img src="../images/revanth.jpg" id="photo">
+            <img src="../images/sarthak.png" id="photo1">
+        </div>
+    </div>
+
+    <canvas id="canvas1"></canvas>
+
+        <script>
+            let availableStocks = ['Google', 'Reliance', 'Apple', 'Microsoft', 'Amazon', 'Facebook', 'Alphabet', 'Tesla', 'Tencent', 'Alibaba',
+'JP Morgan', 'Visa', 'Mastercard', 'Procter & Gamble', 'Johnson & Johnson', 'Coca-Cola', 'Walmart', 'IBM',
+'Intel', 'Cisco', 'Adobe', 'Netflix', 'PayPal', 'Oracle', 'General Electric', 'Ford', 'Boeing', 'Lockheed Martin',
+'General Motors', 'Chevron', 'Exxon Mobil', 'IBM', 'AT&T', 'Verizon', 'Walt Disney', 'Pfizer', 'Merck', 'Bristol-Myers Squibb',
+'Johnson Controls', 'General Electric', 'Goldman Sachs', 'Morgan Stanley', 'Citigroup', 'Bank of America', 'Wells Fargo',
+'Caterpillar', '3M', 'Honeywell', 'Johnson Controls', 'Caterpillar', 'Berkshire Hathaway', 'McDonaldâ€™s', 'Starbucks',
+'Nike', 'Adidas', 'Pepsico', 'Coca-Cola', 'Nestle', 'Unilever', 'Sony', 'Samsung', 'Toyota', 'Honda', 'Volkswagen',
+'BMW', 'Mercedes-Benz', 'LVMH', 'Louis Vuitton', 'Gucci', 'IBM', 'Adobe', 'Salesforce', 'Intuit', 'Accenture', 'SAP',
+'VMware', 'Dell', 'NVIDIA', 'AMD', 'Intel', 'Qualcomm', 'Micron', 'Applied Materials', 'Texas Instruments', 'Broadcom',
+'AT&T', 'Verizon', 'T-Mobile', 'Vodafone', 'China Mobile', 'Softbank', 'NTT Docomo', 'Sony', 'Panasonic', 'LG', 'Samsung'];
+
+const resultsbox = document.querySelector(".result_box");// class name
+const inputBox = document.getElementById("input_box");
+// const watch_list = document.getElementById("watchList");
+
+//here we are adding onkeyup then if we start anything writing here this funciton gets executed
+inputBox.onkeyup = function(){
+    let result=[]; // this array will store all the filter keywords
+    let input = inputBox.value;  //this input will store all the input box value
+    if(input.length){ //input has some value then it will store the  filtered data in the result.
+        result = availableStocks.filter((keyword)=>
+        {
+           return keyword.toLowerCase().includes(input.toLowerCase());
+        });
+        console.log(result);
+    }
+    display(result);
+}
+
+//NOW WE have to write another function that should be display the result
+function display(result){
+    const content = result.map((list)=>{
+        return "<li onclick=selectinput(this)>"+ list + "</li>"
+    });
+    resultsbox.innerHTML ="<ul>"+content.join('')+"</ul>"
+}
+
+
+
+function selectinput(list){
+    const selectedStock = list.innerHTML;
+    inputBox.value = selectedStock;
+    resultsbox.innerHTML = '';
+}
+
+
+const listContainer = document.getElementById("list-container");
+
+const canvas = document.getElementById('canvas1');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const particlesArrey = [];
+let hue = 0;
+
+window.addEventListener('resize', function(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight; 
+  
+});
+ const mouse = {
+   x: undefined,
+   y: undefined,
+ }
+ 
+ canvas.addEventListener('click', function(event){
+   mouse.x = event.x;
+   mouse.y = event.y;
+   for(let i = 0; i < 10; i++){
+    particlesArrey.push(new Particle());
+  }
+ })
+
+ canvas.addEventListener('mousemove', function(event){
+   mouse.x = event.x;
+   mouse.y = event.y;
+    for(let i = 0; i < 10; i++){
+    particlesArrey.push(new Particle());
+  }
+ })
+
+
+function animate(){
+  ctx.clearRect(0,0, canvas.width, canvas.height)  
+  // ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  // ctx.fillRect(0, 0, canvas.width, canvas.height);
+  handleParticles();
+  hue+=5;
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+class Particle{
+  constructor(){
+    this.x = mouse.x;
+    this.y = mouse.y;
+    // this.x = Math.random() * canvas.width;
+    // this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 15 + 1;
+    this.speedX = Math. random() * 3 - 1.5;
+    this.speedY = Math. random() * 3 - 1.5;
+    this.color = 'hsl(' + hue + ', 100%,50%)';
+  }
+  update(){
+    this.x +=this.speedX;
+    this.y +=this.speedY;
+    if(this.size > 0.1) this.size -= 0.1;
+  }
+  draw(){
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }  
+}
+
+function handleParticles(){
+  for(let i = 0; i < particlesArrey.length; i++){
+    particlesArrey[i].update();
+    particlesArrey[i].draw();
+   
+    for(let j=i;j < particlesArrey.length;j++){
+        const dx = particlesArrey[i].x - particlesArrey[j].x;
+        const dy = particlesArrey[i].y - particlesArrey[j].y;
+        const distance = Math.sqrt(dx*dx*dx + dy*dy*dy);
+        if(distance < 100){
+            ctx.beginPath();
+            ctx.strokeStyle = particlesArrey[i].color;
+             ctx.linewidth = particlesArrey[i].size/10;
+            ctx.moveTo(particlesArrey[i].x,particlesArrey[i].y);
+            ctx.lineTo(particlesArrey[j].x,particlesArrey[j].y);
+            ctx.stroke();
+        }
+    }
+    if(particlesArrey[i].size <= 0.3){
+        particlesArrey.splice(i, 1);
+        i--;
+      }
+  }
+} 
+        </script>
+<!--     
+    <script src="autocomplete.js"></script> -->
+</body>
+</html>
