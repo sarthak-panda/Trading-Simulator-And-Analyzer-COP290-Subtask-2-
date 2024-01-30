@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Baloo+Bhaina+2&family=Bree+Serif&family=Ephesis&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../static/multisearchbox.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul id="navul">
+            <li id="tag" class="honk-tag">Stocks</li>
+            <li><button class="navbut" id="comp"
+                    onclick="window.location.href='{{ url_for('multicandlestick') }}'">Compare Stocks</button></li>
+            <li><button class="navbut" id="filter" onclick="togglefilter()">Toggle Filters</button></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section class="graph">
+            <div id="chart-container">
+            </div>
+            <div class="options">
+                <ul>
+                    <li><button class="Timeline" id="daily">1 Day</button></li>
+                    <li><button class="Timeline" id="weekly">1 Week</button></li>
+                    <li><button class="Timeline" id="Monthly">1 Month</button></li>
+                    <li><button class="Timeline" id="yearly">1 year</button></li>
+                    <li><button class="Timeline" id="yearly5">5 years</button></li>
+                    <!-- <li><button class="Timeline" id="overall">Overall</button></li> -->
+                    <li><!--<button id="plottype"><i class="fas fa-chart-area"></i></button>--><button id="plottype"
+                            onclick="toggleButton()"><i class="fas fa-chart-area"></i></button></li>
+
+
+                </ul>
+            </div>
+        </section>
+        <aside class="stocklist">
+            <div class="search_box">
+                <div class="row">
+                    <input type="text" id="input_box" placeholder="Search the stock" autocomplete="off">
+                    <button id="searchbutton" onclick="sendData()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="result_box">
+                </div>
+            </div>
+            <div id="cont">
+                <div id="stockdetail">
+                    <div id="stockimage"></div>
+                    <div id="stockname">SBI(SBIN)</div>
+                    <div id="stockbriefdetail">Current data senario</div>
+                </div>
+            </div>
+        </aside>
+        <footer class="honk-tag">COP290 ASSIGNMENT-1 SUBTASK-2</footer>
+    </div>
+    <script src="../static/dashboard1.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://kit.fontawesome.com/7b64c67f7b.js" crossorigin="anonymous"></script>
+    <script>
+
+// Convert the Plotly figure data to JSON
+var chartData = {{ chart_data.to_json() | safe }};
+console.log(chartData)
+// Render the Plotly chart
+const parsedLoadingChartData = {{ Loading_data.to_json() | safe }};
+Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+clearAndDisableAllInputsExcept('input_box');
+disableAllButtonsExcept('searchbutton');
+hideStockDetails();
+
+        function sendData() {
+            /*var value = document.getElementById('input_box').value;)*/
+            var inputValue = document.getElementById('input_box').value.trim();
+            var index = availableStocks.findIndex(function (stock) {
+                return stock.trim() === inputValue;
+            });
+            if (index == -1) {
+                // Get the input element
+                var inputBox = document.getElementById('input_box');
+
+                // Set its value to "NotFound!"
+                inputBox.value = "NotFound!";
+
+                // After 2 seconds, revert the color back to its original state
+                setTimeout(function () {
+                    inputBox.value = ""; // Clear the value
+                }, 2000);
+            }
+            else {
+                var currsymbol = stocksym[index];
+                var currseries = series[index];
+                Plotly.newPlot('chart-container', parsedLoadingChartData.data, parsedLoadingChartData.layout);
+                clearAndDisableAllInputsExcept('input_box');
+                disableAllButtonsExcept('searchbutton');
+                removeActiveClassFromTimeline()
+                resetplottype()
+                hideStockDetails()
+                displayStockDetails(index);
+                $.ajax({
+                    url: '/process',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'currsymbol': currsymbol,
+                        'currseries': currseries
+                    }),
+                    success: function (response) {
+                        var chartData = JSON.parse(response);
+
+                        // Render the Plotly chart
+                        Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+                        enableInputBoxAndButtons();
+                        addActiveClass();
+                        //manageButtons()
+                        stopUpdates()
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        } 
+    </script>
+    <script>
+        const buttons = document.querySelectorAll('.Timeline');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                var oldrange = getActiveTimelineInnerText();
+                if (oldrange === "1 Day") {
+                    stopUpdates();
+                }
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Add active class to the clicked button
+                button.classList.add('active');
+                var buttonName = button.textContent.trim();
+
+                $.ajax({
+                    url: '/processrange',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'currRange': buttonName
+                    }),
+                    success: function (response) {
+                        if (buttonName !== "1 Day") {
+                            var chartData = JSON.parse(response);
+                            Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+                        }
+                        else {
+                            livedataplot();
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        function togglefilter() {
+            var button = document.getElementById("filter");
+            button.classList.toggle("active"); // Toggle the "active" class
+            var current_range = getActiveTimelineInnerText()
+            $.ajax({
+                url: '/processfilter',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                }),
+                success: function (response) {
+                    if (current_range !== "1 Day") {
+                        var chartData = JSON.parse(response);
+                        Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function toggleButton() {
+            var button = document.getElementById("plottype");
+            button.classList.toggle("active"); // Toggle the "active" class
+            var current_range = getActiveTimelineInnerText()
+            if (button.classList.contains("active")) {
+                state = "Area"
+                $.ajax({
+                    url: '/processplottype',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'currPlot': state
+                    }),
+                    success: function (response) {
+                        if (current_range !== "1 Day") {
+                            var chartData = JSON.parse(response);
+
+                            // Render the Plotly chart
+                            Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                state = "Candle"
+                $.ajax({
+                    url: '/processplottype',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'currPlot': state
+                    }),
+                    success: function (response) {
+                        if (current_range !== "1 Day") {
+                            var chartData = JSON.parse(response);
+
+                            // Render the Plotly chart
+                            Plotly.newPlot('chart-container', chartData.data, chartData.layout);
+                        }
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/candlestick',
+                success: function () {
+                    console.log('Global variables reset successfully.');
+                    clearAndDisableAllInputsExcept('input_box');
+                    disableAllButtonsExcept('searchbutton');
+                    removeActiveClassFromTimeline()
+                    resetplottype()
+                    hideStockDetails()
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error resetting global variables:', error);
+                }
+            });
+        });
+    </script>
+    <script>
+        function manageButtons() {
+            const filterButton = document.getElementById('filter');
+            const monthsButton = document.getElementById('Monthly');
+            const weeksButton = document.getElementById('weekly');
+
+
+            const filterIsActive = filterButton.classList.contains('active');
+            const monthsIsActive = monthsButton.classList.contains('active');
+            const weeksIsActive = weeksButton.classList.contains('active');
+
+
+            if (filterIsActive) {
+                // If filter button is active, disable and deactivate months, weeks, and merged buttons
+                monthsButton.disabled = true;
+                weeksButton.disabled = true;
+
+                if (monthsButton.classList.contains('active')) {
+                    monthsButton.classList.remove('active');
+                }
+                if (weeksButton.classList.contains('active')) {
+                    weeksButton.classList.remove('active');
+                }
+
+            } else {
+                // If filter button is not active, enable months, weeks, and merged buttons
+                monthsButton.disabled = false;
+                weeksButton.disabled = false;
+
+            }
+
+            if (monthsIsActive || weeksIsActive) {
+                // If months, weeks, or merged button is active, disable and deactivate filter button
+                filterButton.disabled = true;
+                if (filterButton.classList.contains('active')) {
+                    filterButton.classList.remove('active');
+                }
+            } else {
+                // If neither months, weeks, nor merged button is active, enable filter button
+                filterButton.disabled = false;
+            }
+        }
+        document.addEventListener('click', function (event) {
+            // Check if the clicked element belongs to the .Timeline or .navbtn class
+            if (event.target.classList.contains('Timeline') || event.target.classList.contains('navbut')) {
+                manageButtons(); // Call the function if the clicked element belongs to the specified classes
+            }
+        });
+
+
+    </script>
+    <script>
+        let updateIntervals;
+        let cdl;
+        let filterButton = document.getElementById("filter");
+        function livedataplot() {
+            $.ajax({
+                url: '/processrange',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'currRange': "1 Day"
+                }),
+                success: function (response) {
+                    var chartData = JSON.parse(response);
+
+                    // Render the Plotly chart
+                    cdl = chartData.layout;
+                    cdl.uirevision = 'true';
+                    Plotly.newPlot('chart-container', chartData.data, cdl);
+
+                    updateIntervals = setInterval(function () { updatePlot(cdl); }, 1000)
+                    console.log("HI")
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function updatePlot(c) {
+
+            $.ajax({
+                url: '/processrange',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    'currRange': "1 Day"
+                }),
+                success: function (response) {
+                    console.log("HI")
+                    var chartData = JSON.parse(response);
+                    // Render the Plotly chart
+                    Plotly.react('chart-container', chartData.data, c);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function stopUpdates() {
+            clearInterval(updateIntervals); // Stop the periodic updates
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            var activerange=getActiveTimelineInnerText();
+            if(activerange=="1 Day"){
+            var filterButton = document.getElementById("filter");
+
+            // Add a click event listener to the button
+            filterButton.addEventListener("click", function () {
+                stopUpdates();
+                setTimeout(livedataplot, 1000); // Call livedataplot function after 1 second
+            });
+        }
+        });
+    </script>
+</body>
+
+</html>
