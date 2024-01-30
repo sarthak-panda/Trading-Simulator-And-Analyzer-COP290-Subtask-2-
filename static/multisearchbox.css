@@ -1,0 +1,220 @@
+.search_box{
+    /* position: fixed; */
+    width : 99%;
+    background: #fff;
+    /* margin: 200px auto 0;  */
+    position: relative;
+    z-index: 5;
+    border: 2px solid lawngreen;
+    /* it will get equal space from left side and right side and at the top we will have 200px space */
+}
+.red-text {
+    color: red;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 10px 20px;
+}
+/*add the input field*/
+
+#input_box{
+    flex:1; /* it will use all the space available in that row */
+    height: 18px;
+    background: transparent;/*background wont have any color*/
+    border: 0;
+    outline: 0;/*Removes the focus outline that appears when the input is selected.*/
+    font-size: 18px;
+    color: #333;
+    width: 100%;
+}
+#searchbutton{
+    background: transparent;
+    border: 0;
+    outline: 0;
+}
+#searchbutton .fa-solid{
+    width: 25px;
+    color: #555;
+    font-size: 22px;
+    cursor: pointer;
+}
+/*changing the color of place holder text*/
+::placeholder{
+    color: #555;
+}
+.result_box{
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    
+
+}
+.result_box ul{
+    
+    border-top: 1px solid #999;
+    background: azure;
+    display:flex;
+    
+    flex-direction: column;
+    align-items: center;
+    /* padding: 15px 10px; */
+}
+.result_box ul li{
+    list-style: none;
+    border-radius: 3px;
+    padding: 15px;
+    cursor: pointer;
+}
+.result_box ul li:hover{
+    background: #e9f3ff;
+
+}
+ #list-container {
+
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  width: 100%;
+
+}
+.todo-app {
+    display: flex;
+    justify-content: center;
+    
+}
+
+
+.todo-app ul li{
+    position: relative;             /* comment out these two lines as we are not including z-index*/
+    z-index: 1;
+    list-style: none;
+    font-size: 17px;
+    right: 0px;
+    padding: 12px 8px 12px 8px;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ul li::before{
+    content: '';
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background-image: url(images/unchecked.png);
+    background-size: cover;
+    background-position: center;
+    left : 340px;
+    display: flex;
+  flex-direction: column;
+
+} */
+
+/* ul li.checked{
+    color: white;
+    text-decoration: line-through;
+} */
+
+/* ul li.checked::before{
+    background-image: url(images/checked.png);
+} */
+
+/* ul li.checked{
+    color: white;
+    text-decoration: line-through;
+} */
+
+ul li.checked::before{
+    background-image: url(images/checked.png);
+}
+
+ul li span{
+    position: relative;
+    /* right: -85px; */
+    top: auto;
+    width: 50px;
+    height: 41px;
+    font-size: 22px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+}
+ul li span:hover{
+    background: #edeef0;
+}
+
+/* 
+ul li span{
+    position: absolute;
+    right: 440px;
+    top: auto;
+    width: 50px;
+    height: 41px;
+    font-size: 22px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+
+    display: flex;
+  flex-direction: column;
+}
+ul li span:hover{
+    background: #edeef0;
+} */
+
+
+/* .currentstocks{
+    border: 2px solid purple;
+    width: 100%;
+    background-color: lawngreen;
+    color: red;
+    border-radius: 10px;
+    font-weight: bold;
+} */
+.currentstocks {
+    border: 2px solid purple;
+    width: 100%;
+    background: linear-gradient(to right, #434343, #000000);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+    color: red;
+    border-radius: 22px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(1, 1, 1, 0.5);
+    font-family: sans-serif;
+    height: 54px;
+    margin-bottom: 5px;
+}
+
+
+.crossign{
+    position: absolute;
+    right: 0;
+    color: red;
+    border: 2px solid red;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    margin-right: 3px;
+    margin-bottom: 2px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s;
+}
+.crossign:hover {
+    transform: scale(1.1);
+    background-color: red;
+    color: white;
+}
