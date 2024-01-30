@@ -1,0 +1,59 @@
+.search_box{
+    width : 99%;
+    background: #fff;
+    /* margin: 200px auto 0;  */
+    border: 2px solid lawngreen;
+    border-radius: 8px;
+    /* it will get equal space from left side and right side and at the top we will have 200px space */
+}
+.red-text {
+    color: red;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 10px 20px;
+}
+/*add the input field*/
+
+#input_box{
+    flex:1; /* it will use all the space available in that row */
+    height: 18px;
+    background: transparent;/*background wont have any color*/
+    border: 0;
+    outline: 0;/*Removes the focus outline that appears when the input is selected.*/
+    font-size: 18px;
+    color: #333; 
+    width: 100%;
+}
+#searchbutton{
+    background: transparent;
+    border: 0;
+    outline: 0;
+}
+#searchbutton .fa-solid{
+    width: 25px;
+    color: #555;
+    font-size: 22px;
+    cursor: pointer;
+}
+/*changing the color of place holder text*/
+::placeholder{
+    color: #555;
+}
+.result_box ul{
+    border-top: 1px solid #999;
+    /* padding: 15px 10px; */
+}
+.result_box ul li{
+    list-style: none;
+    border-radius: 3px;
+    padding: 15px;
+    cursor: pointer;
+}
+.result_box ul li:hover{
+    background: #e9f3ff;
+
+}
