@@ -619,8 +619,8 @@
         var queryParams = new URLSearchParams(window.location.search);
         var receivedText = queryParams.get('text');
 
-        // Display received text in the input tag
-        document.getElementById('input_box').value = receivedText;
+
+
 
         // Print received text to the console
         console.log("Received text:", receivedText);
@@ -628,9 +628,12 @@
         // Simulate button click on page load
         document.addEventListener('DOMContentLoaded', function () {
             if (receivedText !== "") {
-                simulate(document.getElementById("searchbutton"), "click");
                 var newURL = window.location.pathname;
                 history.pushState({}, '', newURL);
+                setTimeout(function () {
+                    document.getElementById('input_box').value = receivedText;
+                    simulate(document.getElementById("searchbutton"), "click");
+                }, 50);
             }
         });
 

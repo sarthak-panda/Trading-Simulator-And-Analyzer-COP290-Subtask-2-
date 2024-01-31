@@ -12,6 +12,13 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
+app.secret_key = 'your_secret_key'  # Replace with your actual secret key
+
+# Database Configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
 cf.set_config_file(theme="pearl", world_readable=False)
 cf.go_offline()
 
@@ -20,20 +27,6 @@ current_stock_series = "EQ"
 current_plot_type = "Candle"
 current_range = "5 years"
 current_filter_status = 0
-
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-
-@app.route("/plot1")
-def plot1():
-    single_stock = yf.download("MSFT", start="2020-05-27", end="2021-05-27")
-    chart_data = single_stock["Adj Close"].iplot(
-        asFigure=True, title="MSFT Adjusted Close", colors=["red"]
-    )
-    return render_template("plot.html", chart_data=chart_data)
 
 
 def datetotimestamp(date):
@@ -1599,15 +1592,6 @@ def multiprocessfilter():
     else:
         current_multi_filter_status = 1
     return generate_multi_chart_data()
-
-
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your actual secret key
-
-# Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
 # User Model
 class User(db.Model):
