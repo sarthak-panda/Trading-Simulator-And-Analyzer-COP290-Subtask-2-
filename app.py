@@ -1602,3 +1602,13 @@ def multiprocessfilter():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' in session:
+        return render_template('welcome.html', username=session['username'])
+    else:
+        return redirect(url_for('index'))
+@app.route('/search_stock')
+def search_stock():
+    return render_template('search_box.html')
