@@ -945,25 +945,21 @@ def multiprocesspush():
     current_multi_range="5 years"
     current_multi_plot_type="Candle"
     current_multi_filter_status=0
+    current_merged_status="No"
     today = date.today()
     start_date = today - relativedelta(years=5)   
-    if(current_merged_status=="No"):
-            current_stock_list.append(stock_symbol)
-            current_series_list.append(stock_series)
-            length=len(current_stock_list)
-            if(length==4):
-                chart_data=plot_4_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
-            elif(length==3):
-                chart_data=plot_3_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
-            elif(length==2):
-                chart_data=plot_2_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
-            else:
-                chart_data=plot_stock_candlestick(current_stock_list[0],current_series_list[0],start_date,today,current_multi_filter_status,current_multi_range)
+
+    current_stock_list.append(stock_symbol)
+    current_series_list.append(stock_series)
+    length=len(current_stock_list)
+    if(length==4):
+        chart_data=plot_4_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
+    elif(length==3):
+        chart_data=plot_3_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
+    elif(length==2):
+        chart_data=plot_2_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
     else:
-        current_stock_list.append(stock_symbol)
-        current_series_list.append(stock_series)
-        length=len(current_stock_list)
-        chart_data=plot_merged_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_range)       
+        chart_data=plot_stock_candlestick(current_stock_list[0],current_series_list[0],start_date,today,current_multi_filter_status,current_multi_range)      
     chart_data_json = chart_data.to_json()
     return chart_data_json    
          
@@ -975,6 +971,7 @@ def multiprocesspop():
     global current_multi_plot_type
     global current_merged_status
     global current_multi_range
+    global current_multi_filter_status
     data = request.get_json()
     print(data)
     stock_symbol = data['currsymbol']
@@ -982,25 +979,22 @@ def multiprocesspop():
     current_multi_range="5 years"
     current_multi_plot_type="Candle"
     current_multi_filter_status=0
+    current_merged_status="No"
     today = date.today()
     start_date = today - relativedelta(years=5)   
-    if(current_merged_status=="No"):
-            current_stock_list.remove(stock_symbol)
-            current_series_list.remove(stock_series)
-            length=len(current_stock_list)
-            if(length==3):
-                chart_data=plot_3_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
-            elif(length==2):
-                chart_data=plot_2_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
-            elif(length==1):
-                chart_data=plot_stock_candlestick(current_stock_list[0],current_series_list[0],start_date,today,current_multi_filter_status,current_multi_range)
-            elif(length==0):
-                chart_data = Welcome()
-    else:
-        current_stock_list.remove(stock_symbol)
-        current_series_list.remove(stock_series)
-        length=len(current_stock_list)
-        chart_data=plot_merged_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_range)       
+
+    current_stock_list.remove(stock_symbol)
+    current_series_list.remove(stock_series)
+    length=len(current_stock_list)
+    if(length==3):
+        chart_data=plot_3_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
+    elif(length==2):
+        chart_data=plot_2_stock_candlestick(current_stock_list,current_series_list,start_date,today,current_multi_filter_status,current_multi_range)
+    elif(length==1):
+        chart_data=plot_stock_candlestick(current_stock_list[0],current_series_list[0],start_date,today,current_multi_filter_status,current_multi_range)
+    elif(length==0):
+        chart_data = Welcome()
+    
     chart_data_json = chart_data.to_json()
     return chart_data_json    
     # current_stock_symbol=stock_symbol
