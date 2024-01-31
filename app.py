@@ -1667,9 +1667,7 @@ def dashboard():
         return render_template('welcome.html', username=session['username'])
     else:
         return redirect(url_for('index'))
-@app.route('/search_stock')
-def search_stock():
-    return render_template('search_box.html')
+
 
 
 @app.route('/logout')
