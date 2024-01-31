@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for,flash, session
 from jugaad_data.nse import stock_df
 from dateutil.relativedelta import relativedelta
 import pandas as pd
@@ -8,7 +8,8 @@ from datetime import date, datetime
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import random, requests, time
-
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 
 cf.set_config_file(theme="pearl", world_readable=False)
@@ -1600,12 +1601,6 @@ def multiprocessfilter():
     return generate_multi_chart_data()
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your actual secret key
 
@@ -1664,7 +1659,7 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        return render_template('welcome.html', username=session['username'])
+        return render_template('search_box.html', username=session['username'])
     else:
         return redirect(url_for('index'))
 

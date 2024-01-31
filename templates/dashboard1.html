@@ -584,7 +584,7 @@
             }
         });
     </script>
-     <script>
+    <script>
 
         // Function to disable buttons for 1 second
         function disableButtons(buttons) {
@@ -612,7 +612,38 @@
 
 
 
-    </script>   
+    </script>
+
+    <script>
+        // Get the text from the query parameter
+        var queryParams = new URLSearchParams(window.location.search);
+        var receivedText = queryParams.get('text');
+
+        // Display received text in the input tag
+        document.getElementById('input_box').value = receivedText;
+
+        // Print received text to the console
+        console.log("Received text:", receivedText);
+
+        // Simulate button click on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            if (receivedText !== "") {
+                simulate(document.getElementById("searchbutton"), "click");
+                var newURL = window.location.pathname;
+                history.pushState({}, '', newURL);
+            }
+        });
+
+        //JavaScript function to simulate click event
+        function simulate(element, eventName) {
+            var event = new MouseEvent(eventName, {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            element.dispatchEvent(event);
+        }
+    </script>
 </body>
 
 </html>
