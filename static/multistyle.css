@@ -1,218 +1,166 @@
 * {
-    padding: 0;
-    margin: 0;
-}
-
-html {
-    font-family: 'Baloo Bhai 2', sans-serif;
-    color: white;
-    background-attachment: fixed;
-    background-image: url('bg.jpg');
-    background-size: cover;
-    /* Set background image size to cover */
-    background-repeat: no-repeat;
-    /* Prevent background image from repeating */
-}
-
-.navbar {
-    display: block;
-    color: white;
-    position: fixed;
-    font-size: 1rem;
-    top: 18px;
-    left: 0px;
-    width: 100%;
-    height: 85px;
-    z-index: 1;
-    box-sizing: border-box;
-}
-
-.navbar::before {
-    background-color: black;
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 85px;
-    z-index: -4;
-    opacity: 0.5;
-
-}
-
-.navbar li {
-    list-style: none;
-    box-sizing: border-box;
-    width: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-inline: 2%;
-}
-
-#navul {
-    display: flex;
-    flex-direction: row;
-}
-
-#tag {
-    font-weight: bold;
-    font-size: xx-large;
-}
-
-.honk-tag {
-    font-family: "Honk", system-ui;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-        "MORF" 15,
-        "SHLN" 50;
-}
-
-.graph {
-    grid-area: gh;
-    border: 2px solid blue;
-    height: calc(100vh - 145px);
-}
-
-.stocklist {
-    grid-area: sl;
-    border: 2px solid red;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    height: calc(100vh - 145px);
-}
-
-footer {
-    grid-area: ft;
-    text-align: center;
-    border: 2px solid green;
-    font-size: x-large;
-}
-
-/* .container{
-    top: 85px;
-    position: fixed;
-    width: 100vw;
-    color: red;
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-areas:
-    'gh gh gh sl'
-    'gh gh gh sl'
-    'gh gh gh sl'
-    'gh gh gh sl'
-    'gh gh gh sl'
-    'ft ft ft ft';
-} */
-.container {
-    top: 85px;
-    position: fixed;
-    width: 100vw;
-    color: red;
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-rows: repeat(6, 1fr);
-    /* Equal size for each row */
-    grid-template-columns: repeat(4, 1fr);
-    /* Equal size for each column */
-    grid-template-areas:
-        'gh gh gh sl'
-        'gh gh gh sl'
-        'gh gh gh sl'
-        'gh gh gh sl'
-        'gh gh gh sl'
-        'ft ft ft ft';
-}
-
-#chart-container {
-    display: flex;
-    align-items: top;
-    justify-content: center;
-    width: 100%;
-    position: relative;
-    height: 100%;
-    overflow-y: scroll;
-
-}
-#chart-container::-webkit-scrollbar {
-    display: none;
-}
-
-.options {
-    position: relative;
-    z-index: 1;
-    /* margin-top: 5px; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.options ul {
-    display: flex;
-    flex-direction: row;
-    margin-top: -48px;
-    position: fixed;
-}
-
-.options li {
-    list-style: none;
-    margin-left: 20px;
-}
-
-.options button {
-    padding: 5px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.Timeline {
-    background-color: red;
-    border-color: white;
-}
-
-.active {
-    background-color: rgb(3, 255, 3);
-}
-
-#plottype {
-    background-color: red;
-    /* Initial color for inactive state */
-    border-color: white;
-}
-
-#plottype.active {
-    background-color: rgb(3, 255, 3);
-    /* Color for active state */
-    border-color: white;
-}
-
-.navbut {
-    background-color: red;
-    /* Initial color for inactive state */
-    border-color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    padding: 2px;
-}
-
-.navbut.active {
-    background-color: rgb(3, 255, 3);
-    /* Color for active state */
-    border-color: white;
-    color: black;
-}
-
-#cont {
-    position: relative;
-    height: calc(100% - 49px);
-    width: 100%;
-    border: 2px solid green;
-    background-color: rgba(34, 46, 50, 0.8);
-}
-
-.stocklist::-webkit-scrollbar {
-    display: none;
-}
+    padding:0;
+    margin:0;
+  }
+  html {
+    font-family:'Baloo Bhai 2',sans-serif;
+    color:white;
+    background-attachment:fixed;
+    background-image:url('bg.jpg');
+    background-size:cover;
+    background-repeat:no-repeat;
+  }
+  .navbar {
+    display:block;
+    color:white;
+    position:fixed;
+    font-size:1rem;
+    top:18px;
+    left:0px;
+    width:100%;
+    height:85px;
+    z-index:1;
+    box-sizing:border-box;
+  }
+  .navbar::before {
+    background-color:black;
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:85px;
+    z-index:-4;
+    opacity:0.5;
+  }
+  .navbar li {
+    list-style:none;
+    box-sizing:border-box;
+    width:5%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-inline:2%;
+  }
+  #navul {
+    display:flex;
+    flex-direction:row;
+  }
+  #tag {
+    font-weight:bold;
+    font-size:xx-large;
+  }
+  .honk-tag {
+    font-family:"Honk",system-ui;
+    font-optical-sizing:auto;
+    font-weight:400;
+    font-style:normal;
+    font-variation-settings:"MORF" 15,"SHLN" 50;
+  }
+  .graph {
+    grid-area:gh;
+    border:2px solid blue;
+    height:calc(100vh - 145px);
+  }
+  .stocklist {
+    grid-area:sl;
+    border:2px solid red;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    box-sizing:border-box;
+    height:calc(100vh - 145px);
+  }
+  footer {
+    grid-area:ft;
+    text-align:center;
+    border:2px solid green;
+    font-size:x-large;
+  }
+  .container {
+    top:85px;
+    position:fixed;
+    width:100vw;
+    color:red;
+    display:grid;
+    grid-gap:1rem;
+    grid-template-rows:repeat(6,1fr);
+    grid-template-columns:repeat(4,1fr);
+    grid-template-areas:'gh gh gh sl'
+          'gh gh gh sl'
+          'gh gh gh sl'
+          'gh gh gh sl'
+          'gh gh gh sl'
+          'ft ft ft ft';
+  }
+  #chart-container {
+    display:flex;
+    align-items:top;
+    justify-content:center;
+    width:100%;
+    position:relative;
+    height:100%;
+    overflow-y:scroll;
+  }
+  #chart-container::-webkit-scrollbar {
+    display:none;
+  }
+  .options {
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .options ul {
+    display:flex;
+    flex-direction:row;
+    margin-top:-48px;
+    position:fixed;
+  }
+  .options li {
+    list-style:none;
+    margin-left:20px;
+  }
+  .options button {
+    padding:5px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .Timeline {
+    background-color:red;
+    border-color:white;
+  }
+  .active {
+    background-color:rgb(3,255,3);
+  }
+  #plottype {
+    background-color:red;
+    border-color:white;
+  }
+  #plottype.active {
+    background-color:rgb(3,255,3);
+    border-color:white;
+  }
+  .navbut {
+    background-color:red;
+    border-color:white;
+    border-radius:8px;
+    cursor:pointer;
+    padding:2px;
+  }
+  .navbut.active {
+    background-color:rgb(3,255,3);
+    border-color:white;
+    color:black;
+  }
+  #cont {
+    position:relative;
+    height:calc(100% - 49px);
+    width:100%;
+    border:2px solid green;
+    background-color:rgba(34,46,50,0.8);
+  }
+  .stocklist::-webkit-scrollbar {
+    display:none;
+  }
+  
