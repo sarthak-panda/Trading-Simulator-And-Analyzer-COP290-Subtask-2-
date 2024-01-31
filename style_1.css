@@ -37,11 +37,15 @@ h1{
     z-index: 0;
 }
 
-.container{
+.container {
     width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
     background: linear-gradient(135deg, #153677,#4e085f);
-    padding : 10px;
+    padding: 10px;
 }
 body{
     overflow: hidden;
@@ -49,7 +53,8 @@ body{
 .search_box{
     width : 600px;
     background: #fff;
-    margin: 200px auto 0; 
+    margin: 9%;
+
     position: relative;
     z-index: 5;
     /* it will get equal space from left side and right side and at the top we will have 200px space */
