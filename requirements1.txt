@@ -1,8 +1,13 @@
 yfinance
-mplfinance
 cufflinks
 chart_studio
 nbformat
 statsmodels
 plotly
 jsonify
+numpy
+pandas
+flask
+kaleido
+jugaad-data
+tables
