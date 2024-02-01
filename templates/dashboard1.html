@@ -20,7 +20,11 @@
 <body>
     <nav class="navbar">
         <ul id="navul">
-            <li id="tag" class="honk-tag">Stocks</li>
+            <li id="tag">
+               <h3 class="stocks">
+                Stocks
+               </h3>
+            </li>
             <li><button class="navbut" id="comp"
                     onclick="window.location.href='{{ url_for('multicandlestick') }}'">Compare Stocks</button></li>
             <li><button class="navbut" id="filter" onclick="togglefilter()">Toggle Filters</button></li>
@@ -62,7 +66,7 @@
                 </div>
             </div>
         </aside>
-        <footer class="honk-tag">COP290 ASSIGNMENT-1 SUBTASK-2</footer>
+        <footer class="stocks" id="targ">COP290 ASSIGNMENT-1 SUBTASK-2</footer>
     </div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 

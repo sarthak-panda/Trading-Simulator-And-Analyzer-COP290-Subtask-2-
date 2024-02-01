@@ -2,6 +2,26 @@
     padding:0;
     margin:0;
   }
+  .stocks{
+    /* position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+    z-index: 1000;
+    font-weight: 600;
+    color: transparent;
+    background-image: linear-gradient(to right ,#553c9a, #ee4b2b, #00c2cb, #ff7f50, #553c9a);
+    -webkit-background-clip: text;
+    background-clip: text;    
+    background-size: 200%;
+    background-position: -200%;
+    animation: animated-gradient 2s infinite alternate-reverse;      
+}
+@keyframes animated-gradient{
+    to{
+      background-position: 200%;
+    }
+  }
   html {
     font-family:'Baloo Bhai 2',sans-serif;
     color:white;
@@ -59,21 +79,22 @@
   }
   .graph {
     grid-area:gh;
-    border:2px solid blue;
-    height:calc(100vh - 145px);
+    border:2px solid azure;
+    height:calc(100vh - 140px);
   }
   .stocklist {
     grid-area:sl;
-    border:2px solid red;
+    
+    /* border:2px solid ; */
     overflow-y:scroll;
     overflow-x:hidden;
     box-sizing:border-box;
-    height:calc(100vh - 145px);
+    height:calc(100vh - 140px);
   }
   footer {
     grid-area:ft;
     text-align:center;
-    border:2px solid green;
+    /* border:2px solid green; */
     font-size:x-large;
   }
   .container {
@@ -127,37 +148,37 @@
     cursor:pointer;
   }
   .Timeline {
-    background-color:red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     border-color:white;
   }
   .active {
-    background-color:rgb(3,255,3);
+    background-image: linear-gradient(to bottom right, green, yellow);
   }
   #plottype {
-    background-color:red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     border-color:white;
   }
   #plottype.active {
-    background-color:rgb(3,255,3);
+    background-image: linear-gradient(to bottom right, green, yellow);
     border-color:white;
   }
   .navbut {
-    background-color:red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     border-color:white;
     border-radius:8px;
     cursor:pointer;
     padding:2px;
   }
   .navbut.active {
-    background-color:rgb(3,255,3);
+    background-image: linear-gradient(to bottom right, green, yellow);
     border-color:white;
     color:black;
   }
   #cont {
     position:relative;
-    height:calc(100% - 49px);
+    height:calc(100% - 45px);
     width:100%;
-    border:2px solid green;
+    border:2px solid azure;
     background-color:rgba(34,46,50,0.8);
   }
   .stocklist::-webkit-scrollbar {

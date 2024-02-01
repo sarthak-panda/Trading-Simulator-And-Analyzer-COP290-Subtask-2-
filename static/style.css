@@ -13,6 +13,26 @@ html {
     background-repeat: no-repeat;
     /* Prevent background image from repeating */
 }
+.stocks{
+    /* position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+    z-index: 1000;
+    font-weight: 600;
+    color: transparent;
+    background-image: linear-gradient(to right ,#553c9a, #ee4b2b, #00c2cb, #ff7f50, #553c9a);
+    -webkit-background-clip: text;
+    background-clip: text;    
+    background-size: 200%;
+    background-position: -200%;
+    animation: animated-gradient 2s infinite alternate-reverse;      
+}
+@keyframes animated-gradient{
+    to{
+      background-position: 200%;
+    }
+  }
 
 .navbar {
     display: block;
@@ -88,7 +108,7 @@ html {
 footer {
     grid-area: ft;
     text-align: center;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     font-size: x-large;
 }
 
@@ -169,22 +189,22 @@ footer {
 }
 
 .Timeline {
-    background-color: red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     border-color: white;
 }
 
 .active {
-    background-color: rgb(3, 255, 3);
+    background-image: linear-gradient(to bottom right, green, yellow);
 }
 
 #plottype {
-    background-color: red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     /* Initial color for inactive state */
     border-color: white;
 }
 
 #plottype.active {
-    background-color: rgb(3, 255, 3);
+    background-image: linear-gradient(to bottom right, green, yellow);
     /* Color for active state */
     border-color: white;
 }
@@ -228,7 +248,7 @@ footer {
 }
 
 .navbut {
-    background-color: red;
+    background-image: linear-gradient(to bottom right, red, yellow);
     /* Initial color for inactive state */
     border-color: white;
     border-radius: 8px;
@@ -237,7 +257,7 @@ footer {
 }
 
 .navbut.active {
-    background-color: rgb(3, 255, 3);
+    background-image: linear-gradient(to bottom right, green, yellow);
     /* Color for active state */
     border-color: white;
     color: black;

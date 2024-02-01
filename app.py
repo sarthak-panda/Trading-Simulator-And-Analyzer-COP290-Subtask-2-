@@ -95,7 +95,7 @@ def Loading():
         y=20,
         text="<b>Loading...</b>",
         showarrow=False,
-        font=dict(family="Arial", size=100, color="red"),
+        font=dict(family="Arial", size=90, color="gold"),
     )
 
     fig.update_layout(
@@ -132,7 +132,7 @@ def Welcome():
         y=20,
         text="<b>Welcome!</b>",
         showarrow=False,
-        font=dict(family="Arial", size=100, color="red"),
+        font=dict(family="Droid Sans", size=100, color="gold"),
     )
 
     fig.update_layout(
