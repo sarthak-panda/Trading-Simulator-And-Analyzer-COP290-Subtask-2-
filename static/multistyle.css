@@ -80,7 +80,7 @@
   .graph {
     grid-area:gh;
     border:2px solid azure;
-    height:calc(100vh - 140px);
+    height:calc(100vh - 145px);
   }
   .stocklist {
     grid-area:sl;
@@ -176,7 +176,7 @@
   }
   #cont {
     position:relative;
-    height:calc(100% - 45px);
+    height:calc(100% - 47px);
     width:100%;
     border:2px solid azure;
     background-color:rgba(34,46,50,0.8);
