@@ -13,6 +13,7 @@ This web application is developed as a part of the COP290 course. It's a Flask-b
 - Install the necessary dependencies:
   ```
   pip install -r requirement.txt
+  pip install Flask
   ```
 
 ## Usage
