@@ -25,7 +25,7 @@ To launch the web application, run:
 Upon running the command, the Flask server will start, and the application should be accessible through a web browser at `http://localhost:5000` or the designated port displayed in your terminal.
 
 
-## Video Tutorial
+## Video Tutorial Of Usage
 
 https://github.com/sarthak-panda/Trading-Simulator-And-Analyzer-COP290-Subtask-2-/assets/150353186/5c886c86-963d-4440-9e8c-fcdc29055212
 
